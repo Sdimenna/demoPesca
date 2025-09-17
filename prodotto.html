@@ -550,37 +550,34 @@
         <section class="product-contact">
             <h2>Richiedi Informazioni su questo Prodotto</h2>
             
-            <form id="productContactForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="4a5766da-769e-45fb-a5e9-3b1fda7b0229">
-                <input type="hidden" id="product-name-input" name="product-name">
-                
-                <div class="form-group">
-                    <label for="name">Nome e Cognome <span class="required">*</span></label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Telefono <span class="optional">(opzionale)</span></label>
-                    <input type="tel" id="phone" name="phone">
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Messaggio <span class="required">*</span></label>
-                    <textarea id="message" name="message" required>Salve, sono interessato al prodotto: </textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">Invia Richiesta</button>
-                
-                <div id="confirmation" class="confirmation">
-                    Grazie per la tua richiesta! Ti contatteremo al più presto.
-                </div>
+            <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="4a5766da-769e-45fb-a5e9-3b1fda7b0229">
+            <input type="hidden" name="redirect" value="https://web3forms.com/success">
+            <input type="hidden" id="product-name-input" name="product-name" value="Prodotto Generico">
+
+            <div class="form-group">
+                <label for="name">Nome e Cognome <span class="required">*</span></label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Telefono <span class="optional">(opzionale)</span></label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Messaggio <span class="required">*</span></label>
+                <textarea id="message" name="message" required>Salve, sono interessato al prodotto: </textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Invia Richiesta</button>
             </form>
-        </section>
+    </section>
     </div>
 
     <!-- Footer -->
@@ -843,32 +840,49 @@
                 `;
             }
         }
-        
-        // Gestione del form di contatto
-        const contactForm = document.getElementById('productContactForm');
-        const confirmation = document.getElementById('confirmation');
-        
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+          // Gestione semplice del redirect
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
             
-            // Qui andrebbe il codice per l'invio effettivo della mail
-            // Per ora simuliamo l'invio mostrando un messaggio di conferma
+            // Controlla se siamo tornati da un invio successivo
+            if (urlParams.get('submission_id')) {
+                document.querySelector('form').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            }
             
-            // Mostra il messaggio di conferma
-            confirmation.style.display = 'block';
-            
-            // Resetta il form
-            contactForm.reset();
-            
-            // Ripristina il messaggio predefinito
-            const productName = document.getElementById('product-name-input').value;
-            document.getElementById('message').value = `Salve, sono interessato al prodotto: ${productName}. Potreste fornirmi maggiori informazioni?`;
-            
-            // Nascondi il messaggio dopo 5 secondi
-            setTimeout(() => {
-                confirmation.style.display = 'none';
-            }, 5000);
+            // Precompila il nome del prodotto se specificato nell'URL
+            const productName = urlParams.get('product');
+            if (productName) {
+                document.getElementById('product-name-input').value = productName;
+                document.getElementById('message').value = `Salve, sono interessato al prodotto: ${productName}`;
+            }
         });
+        // Gestione del form di contatto
+        // const contactForm = document.getElementById('productContactForm');
+        // const confirmation = document.getElementById('confirmation');
+        
+        // contactForm.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     // Qui andrebbe il codice per l'invio effettivo della mail
+        //     // Per ora simuliamo l'invio mostrando un messaggio di conferma
+            
+        //     // Mostra il messaggio di conferma
+        //     confirmation.style.display = 'block';
+            
+        //     // Resetta il form
+        //     contactForm.reset();
+            
+        //     // Ripristina il messaggio predefinito
+        //     const productName = document.getElementById('product-name-input').value;
+        //     document.getElementById('message').value = `Salve, sono interessato al prodotto: ${productName}. Potreste fornirmi maggiori informazioni?`;
+            
+        //     // Nascondi il messaggio dopo 5 secondi
+        //     setTimeout(() => {
+        //         confirmation.style.display = 'none';
+        //     }, 5000);
+        // });
+        
         
         // Carica il prodotto quando la pagina è pronta
         document.addEventListener('DOMContentLoaded', loadProduct);
