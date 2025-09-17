@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodotto - Pesca Sho</title>
+    <style>
+        /* Stili dalla tua pagina Boil (mantenuti per coerenza) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .slogan {
+            font-style: italic;
+            display: none;
+        }
+        
+        .desktop-nav {
+            display: block;
+        }
+        
+        .desktop-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .desktop-nav ul li {
+            margin: 0 1rem;
+        }
+        
+        .desktop-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .desktop-nav ul li a:hover, .desktop-nav ul li a.active {
+            background-color: #1a6fc9;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s linear;
+        }
+        
+        .mobile-nav {
+            display: none;
+            background-color: #0d4a8a;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-nav.active {
+            display: block;
+        }
+        
+        .mobile-nav ul {
+            list-style: none;
+            padding: 1rem 0;
+        }
+        
+        .mobile-nav ul li {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .mobile-nav ul li a:hover, .mobile-nav ul li a.active {
+            background-color: #1a6fc9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: #1e5799;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Contenuto Principale */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* Dettaglio Prodotto */
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-gallery {
+            position: relative;
+        }
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            height: 400px;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #fff;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 100;
+            transition: background-color 0.3s;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-control:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .carousel-control.prev {
+            left: 10px;
+        }
+        
+        .carousel-control.next {
+            right: 10px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .carousel-indicator.active {
+            background-color: white;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-category {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.8rem;
+            color: #1e5799;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .product-specs {
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-specs h3 {
+            margin-bottom: 0.5rem;
+            color: #1e5799;
+        }
+        
+        .specs-list {
+            list-style: none;
+        }
+        
+        .specs-list li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-name {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        
+        /* Form di Contatto per il Prodotto */
+        .product-contact {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .product-contact h2 {
+            color: #1e5799;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1e5799;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group .optional {
+            color: #888;
+            font-style: italic;
+            font-weight: normal;
+        }
+        
+        .submit-btn {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #154276;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        footer {
+            background-color: #0d4a8a;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .confirmation {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .slogan {
+                display: block;
+                font-size: 0.9rem;
+            }
+            
+            .carousel-item {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+                margin-left: 40px;
+            }
+            
+            .product-detail, .product-contact {
+                padding: 1.5rem;
+            }
+            
+            .product-title {
+                font-size: 1.5rem;
+            }
+            
+            .carousel-item {
+                height: 250px;
+            }
+            
+            .carousel-control {
+                padding: 0.6rem;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con Logo e Navigazione -->
+    <header>
+        <div class="header-container">
+            <button class="hamburger" aria-label="Menu navigazione">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">Pesca Sho</div>
+            <p class="slogan">Il tuo negozio di fiducia per la pesca</p>
+            
+            <!-- Navigazione Desktop -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="boil.html">Boil</a></li>
+                    <li><a href="dip.html">Dip</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Navigazione Mobile -->
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="boil.html">Boil</a></li>
+                <li><a href="dip.html">Dip</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> > <a href="boil.html">Boil</a> > <span id="breadcrumb-product">Prodotto</span>
+    </div>
+
+    <!-- Contenuto Principale -->
+    <div class="container">
+        <!-- Dettaglio Prodotto -->
+        <section class="product-detail">
+            <div class="product-gallery">
+                <div class="carousel">
+                    <div class="carousel-container" id="carousel-container">
+                        <!-- Le immagini del carosello verranno aggiunte dinamicamente -->
+                    </div>
+                    <button class="carousel-control prev">&lt;</button>
+                    <button class="carousel-control next">&gt;</button>
+                    <div class="carousel-indicators" id="carousel-indicators">
+                        <!-- Gli indicatori verranno aggiunti dinamicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <div class="product-category" id="product-category">Categoria</div>
+                <h1 class="product-title" id="product-title">Nome Prodotto</h1>
+                <div class="product-price" id="product-price">€0,00</div>
+                
+                <div class="product-description" id="product-description">
+                    Descrizione del prodotto...
+                </div>
+                
+                <div class="product-specs">
+                    <h3>Specifiche Tecniche</h3>
+                    <ul class="specs-list" id="product-specs">
+                        <!-- Le specifiche verranno aggiunte dinamicamente -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form di Contatto per il Prodotto -->
+        <section class="product-contact">
+            <h2>Richiedi Informazioni su questo Prodotto</h2>
+            
+            <form id="productContactForm">
+                <input type="hidden" id="product-name-input" name="product-name">
+                
+                <div class="form-group">
+                    <label for="name">Nome e Cognome <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefono <span class="optional">(opzionale)</span></label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Messaggio <span class="required">*</span></label>
+                    <textarea id="message" name="message" required>Salve, sono interessato al prodotto: </textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Invia Richiesta</button>
+                
+                <div id="confirmation" class="confirmation">
+                    Grazie per la tua richiesta! Ti contatteremo al più presto.
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="contact-info">
+            <p>Email: info@pescasho.it | Tel: 0123 456789</p>
+            <p>Indirizzo: Via della Pesca, 123 - 00100 Roma (RM)</p>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="YouTube">YT</a>
+        </div>
+    </footer>
+
+    <script>
+        // Funzionalità menu hamburger
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Chiudi il menu mobile quando si clicca su un link
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+        
+        // Database prodotti (basato sui prodotti della tua pagina Boil)
+        const products = {
+            'boilies-fragola': {
+                id: 'boilies-fragola',
+                category: 'Boilies',
+                title: 'Boilies alla Fragola',
+                price: '€12,90',
+                description: 'Boilies ad alto potere attrattivo con aroma di fragola. Confezione da 500g. Ideali per la pesca alla carpa in acque ferme.',
+                images: [
+                    'images/boils/product1.jpg',
+                    'images/boils/product1-2.jpg'
+                ],
+                specs: [
+                    { name: 'Peso', value: '500g' },
+                    { name: 'Aroma', value: 'Fragola' },
+                    { name: 'Diametro', value: '20mm' },
+                    { name: 'Tipo', value: 'Affondante' },
+                    { name: 'Utilizzo', value: 'Acque ferme' }
+                ]
+            },
+            'boilies-pesce': {
+                id: 'boilies-pesce',
+                category: 'Boilies',
+                title: 'Boilies al Pesce',
+                price: '€14,50',
+                description: 'Boilies proteici con farina di pesce. Ideale for acque fredde e pesca notturna. Confezione da 500g.',
+                images: [
+                    'images/boils/product2.jpg',
+                    'images/boils/product2-2.jpg'
+                ],
+                specs: [
+                    { name: 'Peso', value: '500g' },
+                    { name: 'Aroma', value: 'Pesce' },
+                    { name: 'Diametro', value: '24mm' },
+                    { name: 'Tipo', value: 'Galleggiante' },
+                    { name: 'Utilizzo', value: 'Acque fredde' }
+                ]
+            },
+            'boilies-halibut': {
+                id: 'boilies-halibut',
+                category: 'Boilies',
+                title: 'Boilies alla Halibut',
+                price: '€16,90',
+                description: 'Boilies premium con farina di halibut. Massima resa in ogni condizione. Confezione da 500g.',
+                images: [
+                    'images/boils/product3.jpg',
+                    'images/boils/product3-2.jpg'
+                ],
+                specs: [
+                    { name: 'Peso', value: '500g' },
+                    { name: 'Aroma', value: 'Halibut' },
+                    { name: 'Diametro', value: '22mm' },
+                    { name: 'Tipo', value: 'Affondante' },
+                    { name: 'Utilizzo', value: 'Tutte le condizioni' }
+                ]
+            },
+            'boilies-birdfood': {
+                id: 'boilies-birdfood',
+                category: 'Boilies',
+                title: 'Boilies Bird Food',
+                price: '€13,20',
+                description: 'Boilies classici con mix di cereali e semi. Provato e testato. Confezione da 500g.',
+                images: [
+                    'images/boils/product4.jpg',
+                    'images/boils/product4-2.jpg'
+                ],
+                specs: [
+                    { name: 'Peso', value: '500g' },
+                    { name: 'Aroma', value: 'Cereali e semi' },
+                    { name: 'Diametro', value: '20mm' },
+                    { name: 'Tipo', value: 'Affondante' },
+                    { name: 'Utilizzo', value: 'Acque calme' }
+                ]
+            },
+            'liquido-attrattivo': {
+                id: 'liquido-attrattivo',
+                category: 'Liquidi',
+                title: 'Liquido Attrattivo',
+                price: '€9,90',
+                description: 'Liquido attrattivo multiuso con aroma di frutta. Confezione da 1L. Adatto per l\'immersione di boilsies e pop-up.',
+                images: [
+                    'images/boils/product5.jpg',
+                    'images/boils/product5-2.jpg'
+                ],
+                specs: [
+                    { name: 'Volume', value: '1L' },
+                    { name: 'Aroma', value: 'Misto frutta' },
+                    { name: 'Utilizzo', value: 'Immersione' },
+                    { name: 'Resistenza', value: '48 ore' }
+                ]
+            },
+            'mix-pasturazione': {
+                id: 'mix-pasturazione',
+                category: 'Mix',
+                title: 'Mix Pasturazione',
+                price: '€18,50',
+                description: 'Mix completo per pasturazione con boilies e pellet. Risultati garantiti. Confezione da 2kg.',
+                images: [
+                    'images/boils/product6.jpg',
+                    'images/boils/product6-2.jpg'
+                ],
+                specs: [
+                    { name: 'Peso', value: '2kg' },
+                    { name: 'Composizione', value: 'Boilies e pellet' },
+                    { name: 'Utilizzo', value: 'Pasturazione' },
+                    { name: 'Resistenza', value: '72 ore' }
+                ]
+            }
+        };
+        
+        // Variabili per il carosello
+        let currentSlide = 0;
+        
+        // Funzione per inizializzare il carosello
+        function initCarousel(images, productTitle) {
+            const carouselContainer = document.getElementById('carousel-container');
+            const indicatorsContainer = document.getElementById('carousel-indicators');
+            
+            // Pulisci il carosello
+            carouselContainer.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            
+            // Aggiungi immagini al carosello
+            images.forEach((image, index) => {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+                carouselItem.innerHTML = `<img src="${image}" alt="${productTitle} - Vista ${index + 1}">`;
+                carouselContainer.appendChild(carouselItem);
+                
+                // Aggiungi indicatori
+                const indicator = document.createElement('button');
+                indicator.className = 'carousel-indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                indicatorsContainer.appendChild(indicator);
+            });
+            
+            // Aggiungi event listeners per i controlli
+            document.querySelector('.carousel-control.prev').addEventListener('click', () => {
+                prevSlide();
+            });
+            
+            document.querySelector('.carousel-control.next').addEventListener('click', () => {
+                nextSlide();
+            });
+            
+            // Auto-scroll ogni 5 secondi
+            setInterval(() => {
+                nextSlide();
+            }, 5000);
+        }
+        
+        // Funzioni per navigare il carosello
+        function goToSlide(index) {
+            const carouselContainer = document.getElementById('carousel-container');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            
+            currentSlide = index;
+            carouselContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Aggiorna indicatori
+            indicators.forEach((indicator, i) => {
+                if (i === currentSlide) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            const totalSlides = document.querySelectorAll('.carousel-item').length;
+            currentSlide = (currentSlide + 1) % totalSlides;
+            goToSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            const totalSlides = document.querySelectorAll('.carousel-item').length;
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            goToSlide(currentSlide);
+        }
+        
+        // Caricamento del prodotto in base al parametro URL
+        function loadProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (productId && products[productId]) {
+                const product = products[productId];
+                
+                // Aggiorna il breadcrumb
+                document.getElementById('breadcrumb-product').textContent = product.title;
+                
+                // Aggiorna i dettagli del prodotto
+                document.getElementById('product-category').textContent = product.category;
+                document.getElementById('product-title').textContent = product.title;
+                document.getElementById('product-price').textContent = product.price;
+                document.getElementById('product-description').textContent = product.description;
+                document.getElementById('product-name-input').value = product.title;
+                
+                // Inizializza il carosello
+                initCarousel(product.images, product.title);
+                
+                // Aggiorna le specifiche tecniche
+                const specsContainer = document.getElementById('product-specs');
+                specsContainer.innerHTML = '';
+                
+                product.specs.forEach(spec => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="spec-name">${spec.name}:</span> ${spec.value}`;
+                    specsContainer.appendChild(li);
+                });
+                
+                // Aggiorna il testo predefinito del messaggio
+                document.getElementById('message').value = `Salve, sono interessato al prodotto: ${product.title}. Potreste fornirmi maggiori informazioni?`;
+            } else {
+                // Prodotto non trovato
+                document.querySelector('.container').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; background: white; border-radius: 8px;">
+                        <h2>Prodotto non trovato</h2>
+                        <p>Il prodotto che stai cercando non è disponibile.</p>
+                        <a href="boil.html" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #1e5799; color: white; text-decoration: none; border-radius: 4px;">Torna ai Prodotti</a>
+                    </div>
+                `;
+            }
+        }
+        
+        // Gestione del form di contatto
+        const contactForm = document.getElementById('productContactForm');
+        const confirmation = document.getElementById('confirmation');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Qui andrebbe il codice per l'invio effettivo della mail
+            // Per ora simuliamo l'invio mostrando un messaggio di conferma
+            
+            // Mostra il messaggio di conferma
+            confirmation.style.display = 'block';
+            
+            // Resetta il form
+            contactForm.reset();
+            
+            // Ripristina il messaggio predefinito
+            const productName = document.getElementById('product-name-input').value;
+            document.getElementById('message').value = `Salve, sono interessato al prodotto: ${productName}. Potreste fornirmi maggiori informazioni?`;
+            
+            // Nascondi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                confirmation.style.display = 'none';
+            }, 5000);
+        });
+        
+        // Carica il prodotto quando la pagina è pronta
+        document.addEventListener('DOMContentLoaded', loadProduct);
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesca Sho - Attrezzatura per la pesca</title>
+    <style>
+        /* Reset e Stili Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .slogan {
+            font-style: italic;
+            display: none; /* Nascondiamo lo slogan in mobile */
+        }
+        
+        /* Navigazione Desktop */
+        .desktop-nav {
+            display: block;
+        }
+        
+        .desktop-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .desktop-nav ul li {
+            margin: 0 1rem;
+        }
+        
+        .desktop-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .desktop-nav ul li a:hover {
+            background-color: #1a6fc9;
+        }
+        
+        /* Hamburger Menu (Mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s linear;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            background-color: #0d4a8a;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-nav.active {
+            display: block;
+        }
+        
+        .mobile-nav ul {
+            list-style: none;
+            padding: 1rem 0;
+        }
+        
+        .mobile-nav ul li {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .mobile-nav ul li a:hover {
+            background-color: #1a6fc9;
+        }
+        
+        /* Rettangolo Descrizione */
+        .description {
+            background-color: white;
+            padding: 2rem;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1200px;
+        }
+        
+        .description h2 {
+            color: #1e5799;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .description p {
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        /* Carosello */
+        .carousel {
+            max-width: 1200px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            height: 400px;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .carousel-control.prev {
+            left: 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .carousel-control.next {
+            right: 0;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .carousel-indicator.active {
+            background-color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0d4a8a;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .slogan {
+                display: block;
+                font-size: 0.9rem;
+            }
+            
+            .carousel-item {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+                margin-left: 40px; /* Spazio per l'hamburger */
+            }
+            
+            .carousel-item {
+                height: 250px;
+            }
+            
+            .description {
+                padding: 1.5rem;
+                margin: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con Logo e Navigazione -->
+    <header>
+        <div class="header-container">
+            <button class="hamburger" aria-label="Menu navigazione">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">Pesca Sho</div>
+            <p class="slogan">Il tuo negozio di fiducia per la pesca</p>
+            
+            <!-- Navigazione Desktop -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="boil.html">Boil</a></li>
+                    <li><a href="dip.html">Dip</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Navigazione Mobile -->
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="boil.html">Boil</a></li>
+                <li><a href="dip.html">Dip</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Rettangolo Descrizione -->
+    <section class="description">
+        <h2>Benvenuti in Pesca Sho</h2>
+        <p>Il tuo negozio di fiducia per tutto ciò che riguarda la pesca. Offriamo una vasta gamma di prodotti di alta qualità per soddisfare ogni esigenza dei pescatori appassionati. Dalle esche artificiali alle canne da pesca, dai mulinelli agli accessori più ricercati, tutto ciò che ti serve per la tua prossima avventura di pesca lo trovi da noi.</p>
+    </section>
+
+    <!-- Carosello Immagini -->
+    <section class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-item">
+                <img src="https://placehold.co/1200x400/1e5799/white?text=Attrezzatura+da+Pesca" alt="Attrezzatura da pesca">
+            </div>
+            <div class="carousel-item">
+                <img src="https://placehold.co/1200x400/207cca/white?text=Boilies+Speciali" alt="Boilies speciali">
+            </div>
+            <div class="carousel-item">
+                <img src="https://placehold.co/1200x400/154276/white?text=Accessori+Professionali" alt="Accessori professionali">
+            </div>
+            <div class="carousel-item">
+                <img src="https://placehold.co/1200x400/0d4a8a/white?text=Promozioni+in+Corso" alt="Promozioni in corso">
+            </div>
+        </div>
+        <button class="carousel-control prev">&lt;</button>
+        <button class="carousel-control next">&gt;</button>
+        <div class="carousel-indicators">
+            <button class="carousel-indicator active"></button>
+            <button class="carousel-indicator"></button>
+            <button class="carousel-indicator"></button>
+            <button class="carousel-indicator"></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="contact-info">
+            <p>Email: info@pescasho.it | Tel: 0123 456789</p>
+            <p>Indirizzo: Via della Pesca, 123 - 00100 Roma (RM)</p>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="YouTube">YT</a>
+        </div>
+    </footer>
+
+    <script>
+        // Funzionalità menu hamburger
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Funzionalità carosello
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const prevButton = document.querySelector('.carousel-control.prev');
+        const nextButton = document.querySelector('.carousel-control.next');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        let currentIndex = 0;
+        const totalItems = carouselItems.length;
+        
+        function updateCarousel() {
+            carouselContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Aggiorna indicatori
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateCarousel();
+        }
+        
+        // Aggiungi event listeners
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
+        
+        // Aggiungi click agli indicatori
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+        
+        // Auto-play per il carosello
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>

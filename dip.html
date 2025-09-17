@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dips - Pesca Sho</title>
+    <style>
+        /* Reset e Stili Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .slogan {
+            font-style: italic;
+            display: none; /* Nascondiamo lo slogan in mobile */
+        }
+        
+        /* Navigazione Desktop */
+        .desktop-nav {
+            display: block;
+        }
+        
+        .desktop-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .desktop-nav ul li {
+            margin: 0 1rem;
+        }
+        
+        .desktop-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .desktop-nav ul li a:hover {
+            background-color: #1a6fc9;
+        }
+        
+        /* Hamburger Menu (Mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s linear;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            background-color: #0d4a8a;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-nav.active {
+            display: block;
+        }
+        
+        .mobile-nav ul {
+            list-style: none;
+            padding: 1rem 0;
+        }
+        
+        .mobile-nav ul li {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .mobile-nav ul li a:hover {
+            background-color: #1a6fc9;
+        }
+        
+        /* Categoria Header */
+        .category-header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: white;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .category-header h1 {
+            color: #1e5799;
+            margin-bottom: 1rem;
+        }
+        
+        .category-header p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Prodotti */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .product {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background-color: #fff;
+            padding: 1rem;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1e5799;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background-color: #1e5799;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-btn:hover {
+            background-color: #154276;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0d4a8a;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .slogan {
+                display: block;
+                font-size: 0.9rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+                margin-left: 40px; /* Spazio per l'hamburger */
+            }
+            
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-header {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con Logo e Navigazione -->
+    <header>
+        <div class="header-container">
+            <button class="hamburger" aria-label="Menu navigazione">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">Pesca Sho</div>
+            <p class="slogan">Il tuo negozio di fiducia per la pesca</p>
+            
+            <!-- Navigazione Desktop -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="boil.html" class="active">Boil</a></li>
+                    <li><a href="dip.html">Dip</a></li>
+                    <li><a href="contatti.html">Contatti</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Navigazione Mobile -->
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="boil.html" class="active">Boil</a></li>
+                <li><a href="dip.html">Dip</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Intestazione Categoria -->
+    <section class="category-header">
+        <h1>dip e Attrattivi</h1>
+        <p>Scopri la nostra selezione di dip di alta qualità, ideali per la pesca alla carpa. Prodotti con ingredienti selezionati e aromi intensi per massimizzare le tue catture.</p>
+    </section>
+
+    <!-- Prodotti -->
+    <section class="products">
+        <div class="product">
+            <img src="images/Dip/product1.jpg" alt="dip alla fragola" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">dip alla Fragola</h3>
+                <p class="product-price">€12,90</p>
+                <p class="product-description">dip ad alto potere attrattivo con aroma di fragola. Confezione da 500g.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="images/Dip/product2.jpg" alt="dip al pesce" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">dip al Pesce</h3>
+                <p class="product-price">€14,50</p>
+                <p class="product-description">dip proteici con farina di pesce. Ideale per acque fredde.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="images/Dip/product3.jpg" alt="dip alla halibut" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">dip alla Halibut</h3>
+                <p class="product-price">€16,90</p>
+                <p class="product-description">dip premium con farina di halibut. Massima resa in ogni condizione.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="images/Dip/product4.jpg" alt="dip bird food" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">dip Bird Food</h3>
+                <p class="product-price">€13,20</p>
+                <p class="product-description">dip classici con mix di cereali e semi. Provato e testato.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="images/Dip/product5.jpg" alt="Liquido attrattivo" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Liquido Attrattivo</h3>
+                <p class="product-price">€9,90</p>
+                <p class="product-description">Liquido attrattivo multiuso con aroma di frutta. Confezione da 1L.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="images/Dip/product6.jpg" alt="Pasturazione dip" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Mix Pasturazione</h3>
+                <p class="product-price">€18,50</p>
+                <p class="product-description">Mix completo per pasturazione con dip e pellet. Risultati garantiti.</p>
+                <a href="#" class="contact-btn">Richiedi Info</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="contact-info">
+            <p>Email: info@pescasho.it | Tel: 0123 456789</p>
+            <p>Indirizzo: Via della Pesca, 123 - 00100 Roma (RM)</p>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="YouTube">YT</a>
+        </div>
+    </footer>
+
+    <script>
+        // Funzionalità menu hamburger
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Chiudi il menu mobile quando si clicca su un link
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
